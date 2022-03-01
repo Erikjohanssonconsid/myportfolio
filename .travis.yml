@@ -16,6 +16,12 @@ jobs:
     - stage: build bocker image
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -t myportfolio:$TRAVIS_BUILD_NUMBER .
-        - docker tag myportfolio:$TRAVIS_BUILD_NUMBER $DOCKER_USERNAME/myrepo
+        - docker build -t myportfolio .
+        - docker images
+        - docker tag myportfolio $DOCKER_USERNAME/myrepo:$TRAVIS_BUILD_NUMBER
+        - docker push $DOCKER_USERNAME/myrepo:$TRAVIS_BUILD_NUMBER
+        - docker tag myportfolio $DOCKER_USERNAME/myrepo
         - docker push $DOCKER_USERNAME/myrepo:latest
+        # - docker build -t myportfolio:$TRAVIS_BUILD_NUMBER .
+        # - docker tag myportfolio:$TRAVIS_BUILD_NUMBER $DOCKER_USERNAME/myrepo
+        # - docker push $DOCKER_USERNAME/myrepo:latest
